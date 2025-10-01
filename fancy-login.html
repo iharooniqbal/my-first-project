@@ -85,10 +85,21 @@
       color: #667eea;
       text-decoration: underline;
     }
+    .message {
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      font-weight: bold;
+    }
+    .success {
+      color: green;
+    }
+    .error {
+      color: red;
+    }
   </style>
 </head>
 <body>
-  <form class="login-container">
+  <form class="login-container" id="loginForm">
     <h2>Login</h2>
     <div class="input-group">
       <label for="username">Username</label>
@@ -100,6 +111,43 @@
     </div>
     <button class="login-btn" type="submit">Sign In</button>
     <a href="#" class="forgot-link">Forgot password?</a>
+    <div id="message" class="message"></div>
   </form>
+
+  <script>
+    const loginForm = document.getElementById("loginForm");
+    const messageDiv = document.getElementById("message");
+
+    // Example hardcoded login (you can connect to backend later)
+    const correctUsername = "admin";
+    const correctPassword = "12345";
+
+    loginForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (username === correctUsername && password === correctPassword) {
+        messageDiv.textContent = "✅ Login Successful! Redirecting...";
+        messageDiv.className = "message success";
+
+        // Simulate redirect
+        setTimeout(() => {
+          document.body.innerHTML = `
+            <div style="text-align:center; color:white;">
+              <h1>🎉 Welcome, ${username}!</h1>
+              <p>You are now logged in.</p>
+            </div>
+          `;
+          document.body.style.background = "linear-gradient(135deg, #11998e 0%, #38ef7d 100%)";
+        }, 1500);
+
+      } else {
+        messageDiv.textContent = "❌ Invalid username or password!";
+        messageDiv.className = "message error";
+      }
+    });
+  </script>
 </body>
 </html>
